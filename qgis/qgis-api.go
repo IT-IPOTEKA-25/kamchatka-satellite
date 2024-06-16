@@ -20,11 +20,7 @@ func NewQgis(token string) *Qgis {
 	}
 }
 
-func (q *Qgis) GetSatelliteData(x1 float32, y1 float32, x2 float32, y2 float32) (string, error) {
-	x1string := fmt.Sprintf("%f", x1)
-	y1string := fmt.Sprintf("%f", y1)
-	x2string := fmt.Sprintf("%f", x2)
-	y2string := fmt.Sprintf("%f", y2)
+func (q *Qgis) GetSatelliteData(x1 string, y1 string, x2 string, y2 string) (string, error) {
 	// The URL for the API endpoint
 	url := "https://services.sentinel-hub.com/api/v1/process"
 	// Create a new buffer to store the form data
@@ -61,7 +57,7 @@ func (q *Qgis) GetSatelliteData(x1 float32, y1 float32, x2 float32, y2 float32) 
             "width": 512,
             "height": 512
         }
-    }`, x1string, y1string, x2string, y2string)
+    }`, x1, y1, x2, y2)
 	requestPart, err := writer.CreateFormField("request")
 	if err != nil {
 		return "", errors.New("Error creating form field: " + err.Error())

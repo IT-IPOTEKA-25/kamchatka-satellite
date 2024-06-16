@@ -87,14 +87,14 @@ func main() {
 							x2 = data[id+1].Dot[0]
 							y2 = data[id+1].Dot[1]
 						}
-						image, _ := qgisClint.GetSatelliteData(x1, y1, x2, y2)
+						x1string := fmt.Sprintf("%f", x1)
+						y1string := fmt.Sprintf("%f", y1)
+						x2string := fmt.Sprintf("%f", x2)
+						y2string := fmt.Sprintf("%f", y2)
+						image, _ := qgisClint.GetSatelliteData(x1string, y1string, x2string, y2string)
 						hasAny, trouble, err := chatgptClient.Prompt(image)
 						if err != nil && hasAny {
-							if trouble == "felling" {
-
-							} else if trouble == "burning" {
-
-							}
+							err = serverClient.AddSatelliteAlert(context.Background(), image, trouble, x1string, y1string, x2string, y2string)
 						}
 					}
 				default:
